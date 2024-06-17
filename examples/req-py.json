@@ -1,0 +1,5 @@
+{
+    "language": "py",
+    "definition": "def f(*args):\n\treturn {'args': args, 'sum': sum(args), 'from': 'python'}",
+    "args": [4,2,1]
+}

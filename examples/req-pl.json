@@ -1,0 +1,5 @@
+{
+    "language": "pl",
+    "definition": "my ($data) = @_; return { from => 'perl', data => \\@_, size => scalar(@_) }",
+    "args": [4,2,2]
+}

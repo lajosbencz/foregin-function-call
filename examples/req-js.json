@@ -1,0 +1,5 @@
+{
+    "language": "js",
+    "definition": "(...args) => { console.log(`got ${args.length} args:`, args); if(args.length > 2) throw new Error('blyat'); return {from: 'js', args}; }",
+    "args": [4,2]
+}

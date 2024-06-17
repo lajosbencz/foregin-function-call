@@ -1,0 +1,5 @@
+{
+    "language": "php",
+    "definition": "function(...$args) { return ['sum'=>array_sum($args),'from'=>'php']; };",
+    "args": [4,2,1]
+}
