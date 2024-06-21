@@ -43,7 +43,7 @@ jobs:
             ${{ env.GITHUB_IMAGE }}
             ${{ env.DOCKERHUB_IMAGE }}   
           tags: |
-            type=ref,event=release
+            type=edge,branch=master
             type=semver,pattern={{version}}
             type=semver,pattern={{major}}.{{minor}}
             type=semver,pattern={{major}}
