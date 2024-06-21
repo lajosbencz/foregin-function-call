@@ -1,12 +1,12 @@
 name: Docker Image CI
 
 on:
-  push:
-    tags: [ 'v[0-9]+.[0-9]+.[0-9]+' ]
+  release:
+    types: [published]
 
 env:
   GHCR_IMAGE: ghcr.io/${{ github.repository }}
-  DOCKERHUB_IMAGE: docker.io/${{ secrets.DOCKER_USER }}/${{ github.event.repository.name }}
+  DOCKERHUB_IMAGE: ${{ secrets.DOCKER_USER }}/${{ github.event.repository.name }}
 
 jobs:
   build-and-push:
@@ -35,24 +35,19 @@ jobs:
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
 
-      - name: Get version tags
-        id: version
-        uses: jupyterhub/action-major-minor-tag-calculator@v1.5.0
-        with:
-          tag: ${{ github.ref_name }}
-
-      - name: Extract metadata (tags, labels)
+      - name: Docker meta
         id: meta
-        uses: docker/metadata-action@v4
+        uses: docker/metadata-action@v5
         with:
           images: |
-            ${{ env.GHCR_IMAGE }}
-            ${{ env.DOCKERHUB_IMAGE }}
+            ${{ env.GITHUB_IMAGE }}
+            ${{ env.DOCKERHUB_IMAGE }}   
           tags: |
             type=ref,event=release
             type=semver,pattern={{version}}
             type=semver,pattern={{major}}.{{minor}}
             type=semver,pattern={{major}}
+            type=sha
           labels: |
             org.opencontainers.image.title=${{ github.event.repository.name }}
             org.opencontainers.image.description=${{ github.event.repository.description }}
@@ -68,8 +63,8 @@ jobs:
         with:
           context: .
           push: true
+          platforms: linux/amd64,linux/arm64,linux/arm/v7,darwin/amd64,darwin/arm64
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
-          platforms: linux/amd64,linux/arm64,linux/arm/v7,darwin/amd64,darwin/arm64
