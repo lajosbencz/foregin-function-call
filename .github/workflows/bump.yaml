@@ -60,7 +60,7 @@ jobs:
         with:
           release_type: '${{ github.event.inputs.release_type }}'
           push: 'true'
-          prefix_with_v: '${{ github.event.inputs.prefix_with_v }}'
+          prefix_with_v: 'true'
           filter: '${{ github.event.inputs.filter }}'
           prerelease_identifier_base:
             '${{ github.event.inputs.prerelease_base }}'
