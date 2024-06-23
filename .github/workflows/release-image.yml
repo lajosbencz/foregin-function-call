@@ -3,11 +3,16 @@ name: Docker Image CI
 on:
   release:
     types: [published]
+  workflow_run:
+    workflows: 
+      - Manual Version Bump
+    types:
+      - completed
 
 env:
   PLATFORMS: linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64/v8
-  GHCR_IMAGE: ghcr.io/${{ github.repository }}
-  DOCKERHUB_IMAGE: ${{ secrets.DOCKER_USER }}/${{ github.event.repository.name }}
+  GHCR_IMAGE: 'ghcr.io/${{ github.repository }}'
+  DOCKERHUB_IMAGE: '${{ secrets.DOCKER_USER }}/${{ github.event.repository.name }}'
 
 jobs:
   build-and-push:
@@ -24,14 +29,14 @@ jobs:
         uses: docker/login-action@v3
         with:
           registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+          username: '${{ github.actor }}'
+          password: '${{ secrets.GITHUB_TOKEN }}'
       
       - name: Log in to Docker Hub Registry
         uses: docker/login-action@v3
         with:
-          username: ${{ secrets.DOCKER_USER }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
+          username: '${{ secrets.DOCKER_USER }}'
+          password: '${{ secrets.DOCKER_PASSWORD }}'
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
@@ -42,7 +47,7 @@ jobs:
         with:
           images: |
             ${{ env.GITHUB_IMAGE }}
-            ${{ env.DOCKERHUB_IMAGE }}   
+            ${{ env.DOCKERHUB_IMAGE }}
           tags: |
             type=edge,branch=master
             type=semver,pattern={{version}}
@@ -64,8 +69,8 @@ jobs:
         with:
           context: .
           push: true
-          platforms: ${{ env.PLATFORMS }}
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
+          platforms: '${{ env.PLATFORMS }}'
+          tags: '${{ steps.meta.outputs.tags }}'
+          labels: '${{ steps.meta.outputs.labels }}'
           cache-from: type=gha
           cache-to: type=gha,mode=max

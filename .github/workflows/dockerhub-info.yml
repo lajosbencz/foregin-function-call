@@ -11,7 +11,7 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: ${{ github.repository }}
+  IMAGE_NAME: '${{ github.repository }}'
 
 jobs:
   build:
@@ -28,6 +28,6 @@ jobs:
       - name: Update Docker hub info
         uses: peter-evans/dockerhub-description@v3
         with:
-          username: ${{ secrets.DOCKER_USER }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
-          repository: ${{ github.repository }}
+          username: '${{ secrets.DOCKER_USER }}'
+          password: '${{ secrets.DOCKER_PASSWORD }}'
+          repository: '${{ github.repository }}'
