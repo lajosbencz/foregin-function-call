@@ -34,7 +34,7 @@ jobs:
 
       - name: Calculate new tag
         id: tag
-        uses: ./
+        uses: lajosbencz/actions-manual-bump@v1.0.0
         with:
           release_type: '${{ github.event.inputs.release_type }}'
           push: 'false'
@@ -55,8 +55,8 @@ jobs:
           file_pattern: 'package.json'
 
       - name: Push tag
-        id: tag-push
-        uses: ./
+        id: tag_push
+        uses: lajosbencz/actions-manual-bump@v1.0.0
         with:
           release_type: '${{ github.event.inputs.release_type }}'
           push: 'true'
