@@ -55,7 +55,7 @@ export abstract class BaseExecutor implements Executor {
             return result
         } finally {
             await Promise.allSettled([
-                // unlink(fScript),
+                unlink(fScript),
                 unlink(fArgs),
                 unlink(fResult),
             ])
