@@ -3,11 +3,6 @@ name: Docker Image CI
 on:
   release:
     types: [published]
-  workflow_run:
-    workflows: 
-      - Manual Version Bump
-    types:
-      - completed
 
 env:
   PLATFORMS: linux/amd64
